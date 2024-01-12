@@ -5,7 +5,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
-# Create your views here.
+
 from django.utils import translation
 
 from home.models import FAQ
@@ -14,6 +14,7 @@ from product.models import Category, Comment
 from user.forms import SignUpForm, UserUpdateForm, ProfileUpdateForm
 from user.models import UserProfile
 
+#Login required
 @login_required(login_url='/login') # Check login
 def index(request):
     #category = Category.objects.all()
@@ -33,12 +34,12 @@ def login_form(request):
             current_user =request.user
             userprofile=UserProfile.objects.get(user_id=current_user.id)
             request.session['userimage'] = userprofile.image.url
-            #*** Multi Langugae
+           
             request.session[translation.LANGUAGE_SESSION_KEY] = userprofile.language.code
             request.session['currency'] = userprofile.currency.code
             translation.activate(userprofile.language.code)
 
-            # Redirect to a success page.
+            
             return HttpResponseRedirect('/'+userprofile.language.code)
         else:
             messages.warning(request,"Giriş hatası! Kullanıcı adı veya şifrenzi kontrol edin.")
@@ -67,7 +68,7 @@ def signup_form(request):
             password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password)
             login(request, user)
-            # Create data in profile table for user
+           
             current_user = request.user
             data=UserProfile()
             data.user_id=current_user.id
@@ -81,7 +82,7 @@ def signup_form(request):
 
 
     form = SignUpForm()
-    #category = Category.objects.all()
+    
     context = {#'category': category,
                'form': form,
                }
@@ -90,7 +91,7 @@ def signup_form(request):
 
 
 
-@login_required(login_url='/login') # Check login
+@login_required(login_url='/login') 
 def user_update(request):
     if request.method == 'POST':
         user_form = UserUpdateForm(request.POST, instance=request.user) # request.user is user  data
