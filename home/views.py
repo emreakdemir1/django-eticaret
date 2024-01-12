@@ -21,6 +21,7 @@ from product.models import Category, Product, Images, Comment, Variants, Product
 from user.models import UserProfile
 
 
+
 def index(request):
     if not request.session.has_key('currency'):
         request.session['currency'] = settings.DEFAULT_CURRENCY
@@ -40,7 +41,8 @@ def index(request):
             'ON p.id = l.product_id '
             'WHERE  l.lang=%s ORDER BY p.id DESC LIMIT 4', [currentlang])
 
-    products_slider = Product.objects.all().order_by('id')[:4]  #first 4 products
+    products_slider = Product.objects.filter(id__range=[44, 47]).order_by('id')
+
 
 
     products_picked = Product.objects.all().order_by('?')[:4]   #Random selected 4 products
@@ -247,9 +249,39 @@ def savelangcur(request):
     lasturl = request.META.get('HTTP_REFERER')
     curren_user = request.user
     language=Language.objects.get(code=request.LANGUAGE_CODE[0:2])
-    #Save to User profile database
+  
     data = UserProfile.objects.get(user_id=curren_user.id )
     data.language_id = language.id
     data.currency_id = request.session['currency']
     data.save()  # save data
     return HttpResponseRedirect(lasturl)
+def indirim_kuponu_kontrol(kupon_kodu):
+    try:
+        kupon = IndirimKuponu.objects.get(ad=kupon_kodu, son_kullanma_tarihi__gte=timezone.now())
+        return kupon
+    except IndirimKuponu.DoesNotExist:
+        return None
+
+def sepeti_goster(request):
+    # Sepeti gösterirken indirim kuponunu kontrol et
+    kupon_kodu = request.GET.get('kupon_kodu')
+    indirim_kuponu = indirim_kuponu_kontrol(kupon_kodu)
+
+    # İndirim kuponu geçerliyse işlemleri yap
+
+    return render(request, 'sepet.html', {'indirim_kuponu': indirim_kuponu})
+def sepeti_goster(request):
+    kupon_kodu = request.GET.get('kupon_kodu')
+    indirim_kuponu = None
+
+    if kupon_kodu:
+        indirim_kuponu = indirim_kuponu_kontrol(kupon_kodu)
+
+    return render(request, 'sepet.html', {'indirim_kuponu': indirim_kuponu})
+
+def indirim_kuponu_kontrol(kupon_kodu):
+    try:
+        kupon = IndirimKuponu.objects.get(ad=kupon_kodu, son_kullanma_tarihi__gte=timezone.now())
+        return kupon
+    except IndirimKuponu.DoesNotExist:
+        return None

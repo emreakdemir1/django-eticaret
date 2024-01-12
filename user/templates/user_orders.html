@@ -12,8 +12,8 @@
     <div id="breadcrumb">
         <div class="container">
             <ul class="breadcrumb">
-                <li><a href="/">Home</a></li>
-                <li class="active">Order List</li>
+                <li><a href="/">Anasayfa</a></li>
+                <li class="active">Siparişlerim</li>
             </ul>
         </div>
     </div>
@@ -31,17 +31,17 @@
                 <div class="col-md-9">
                     <div class="order-summary clearfix">
                         <div class="section-title">
-                            <h3 class="title">Order List</h3>
+                            <h3 class="title">Siparişler</h3>
                         </div>
                         <table class="shopping-cart-table table">
                             <tr>
                                 <th class="text-left">Id </th>
-                                <th class="text-left">First Name </th>
-                                <th class="text-left">Last Name </th>
-                                <th class="text-left">Total </th>
-                                <th class="text-left">Status </th>
-                                <th class="text-left">Date </th>
-                                <th class="text-left">Detail </th>
+                                <th class="text-left">Ad </th>
+                                <th class="text-left">Soyad </th>
+                                <th class="text-left">Fiyat </th>
+                                <th class="text-left">Durum</th>
+                                <th class="text-left">Tarih </th>
+                                <th class="text-left">Detay </th>
                             </tr>
                             {% for rs in orders %}
                                 <tr>
@@ -51,7 +51,7 @@
                                     <td class="text-left">{{ rs.total}} </td>
                                     <td class="text-left">{{ rs.status}} </td>
                                     <td class="text-left">{{ rs.create_at}} </td>
-                                    <td class="text-left"><a class="primary-btn" href="/user/orderdetail/{{ rs.id }}"> Detail </a></td>
+                                    <td class="text-left"><a class="primary-btn" href="/user/orderdetail/{{ rs.id }}"> Detay </a></td>
                                 </tr>
                             {% endfor %}
                         </table>

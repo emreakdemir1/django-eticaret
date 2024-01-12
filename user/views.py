@@ -41,7 +41,7 @@ def login_form(request):
             # Redirect to a success page.
             return HttpResponseRedirect('/'+userprofile.language.code)
         else:
-            messages.warning(request,"Login Error !! Username or Password is incorrect")
+            messages.warning(request,"Giriş hatası! Kullanıcı adı veya şifrenzi kontrol edin.")
             return HttpResponseRedirect('/login')
     # Return an 'invalid login' error message.
 
@@ -73,7 +73,7 @@ def signup_form(request):
             data.user_id=current_user.id
             data.image="images/users/user.png"
             data.save()
-            messages.success(request, 'Your account has been created!')
+            messages.success(request, 'Hesabınız oluşturuldu! Giriş yapıldı.')
             return HttpResponseRedirect('/')
         else:
             messages.warning(request,form.errors)
@@ -98,12 +98,12 @@ def user_update(request):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
-            messages.success(request, 'Your account has been updated!')
+            messages.success(request, 'Hesabınız güncellendi!')
             return HttpResponseRedirect('/user')
     else:
         category = Category.objects.all()
         user_form = UserUpdateForm(instance=request.user)
-        profile_form = ProfileUpdateForm(instance=request.user.userprofile) #"userprofile" model -> OneToOneField relatinon with user
+        profile_form = ProfileUpdateForm(instance=request.user.userprofile) #"userprofile" model -> 
         context = {
             'category': category,
             'user_form': user_form,
@@ -117,11 +117,11 @@ def user_password(request):
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
-            update_session_auth_hash(request, user)  # Important!
-            messages.success(request, 'Your password was successfully updated!')
+            update_session_auth_hash(request, user)  
+            messages.success(request, 'Şifreniz başarıyla yenilendi!')
             return HttpResponseRedirect('/user')
         else:
-            messages.error(request, 'Please correct the error below.<br>'+ str(form.errors))
+            messages.error(request, 'Lütfen aşağıdaki hatayı düzeltin.<br>'+ str(form.errors))
             return HttpResponseRedirect('/user/password')
     else:
         #category = Category.objects.all()
@@ -190,6 +190,6 @@ def user_comments(request):
 def user_deletecomment(request,id):
     current_user = request.user
     Comment.objects.filter(id=id, user_id=current_user.id).delete()
-    messages.success(request, 'Comment deleted..')
+    messages.success(request, 'Yorum silindi..')
     return HttpResponseRedirect('/user/comments')
 

@@ -14,7 +14,7 @@
     <div id="breadcrumb">
         <div class="container">
             <ul class="breadcrumb">
-                <li><a href="/">Home</a></li>
+                <li><a href="/">Anasayfa</a></li>
                 <li><a href="/category/{{ product.category.id }}/{{ product.category.slug }}">{{ product.category.title }}</a></li>
                 <li class="active">{{ product.title }}</li>
             </ul>
@@ -65,7 +65,7 @@
                     <div class="col-md-6">
                         <div class="product-body">
                             <div class="product-label">
-                                <span>New</span>
+                                <span>Yeni</span>
                                 <span class="sale">-20%</span>
                             </div>
                             <h2 class="product-name">{{ product.title }}</h2>
@@ -78,10 +78,10 @@
                                     <i class="fa fa-star{% if product.avaregereview < 5%}-o empty{% endif%}"></i>
                                     {{ product.avaregereview |stringformat:".2f"}}
                                 </div>
-                                <a href="#tab1"> {{ product.countreview}}  Review(s) / Add Review</a>
+                                <a href="#tab1"> {{ product.countreview}}  Görüntüleme(s) / Görüntüle</a>
                             </div>
 
-                            <p><strong>Brand:</strong> E-SHOP</p>
+                            <p><strong>Ekleyen:</strong> E-SHOP</p>
                             <p>{{ product.description }}</p>
 
 
@@ -112,13 +112,13 @@
 
                             <div class="product-btns">
                                 <div class="row">
-                                    {% if product.variant == 'Size-Color' %}
+                                    {% if product.variant == 'Renk' %}
 
                                         <div class="product-options" >
                                             <div class="size-option">
                                                 <form method="POST" id="post-form">
                                                     <input type="hidden" name="productid" id="productid" value="{{ product.id }}">
-                                                    <span class="text-uppercase">Size :</span>
+                                                    <span class="text-uppercase">Boyut :</span>
                                                     {% csrf_token %}
                                                     <select name="size" id="size">
                                                         {% for rs in sizes %}
@@ -133,11 +133,11 @@
                                                 <div id="appendHere">
                                                     <input type="hidden" name="size" id="size" value="{{ size_id }}">
                                                     <ul class="color-option" >
-                                                        <li><span class="text-uppercase">Color:</span></li>
+                                                        <li><span class="text-uppercase">Renk:</span></li>
                                                         {% for rs in colors %}
                                                             <input type="radio"  {% if variant.id == rs.id %} checked {% endif %} name="variantid" id="variantid" value="{{ rs.id }}" onchange="this.form.submit();">
                                                             <li  {% if variant.id == rs.id %} class="active" {% endif %}>
-                                                                <a style="background-color:{{ rs.color.code }}; color: #D9D9D9; text-shadow: 1px 1px #000000; width: 90px">
+                                                                <a style="background-color:{{ rs.color.code }}; color: #D9D9D9; text-shadow: 1px 1px #000000; width: 90px;">
                                                                     {{ rs.price|currency:request.session.currency }} {{ request.session.currency }} {{ rs.color }}
                                                                 </a>
                                                                 <img src="{{ rs.image }}" style="height: 70px">
@@ -149,13 +149,13 @@
                                         </div>
 
 
-                                    {% elif product.variant == 'Size' %}
+                                    {% elif product.variant == 'Boyut' %}
                                         <form method="post" action="?q=selectvariant" id="post-color">
                                             {% csrf_token %}
                                             <div id="appendHere">
                                                 <input type="hidden" name="size" id="size" value="{{ size_id }}">
                                                 <ul class="color-option" >
-                                                    <li><span class="text-uppercase">Size:</span></li>
+                                                    <li><span class="text-uppercase">Boyut:</span></li>
                                                     {% for rs in sizes %}
                                                         <input type="radio"  {% if variant.id == rs.id %} checked {% endif %} name="variantid" id="variantid" value="{{ rs.id }}" onchange="this.form.submit();">
                                                         <li  {% if variant.id == rs.id %} class="active" {% endif %}>
@@ -169,13 +169,13 @@
                                         </form>
                                         <br><br>
 
-                                    {% elif product.variant == 'Color' %}
+                                    {% elif product.variant == 'Renk' %}
                                         <form method="post" action="?q=selectvariant" id="post-color">
                                             {% csrf_token %}
                                             <div id="appendHere">
                                                 <input type="hidden" name="size" id="size" value="{{ size_id }}">
                                                 <ul class="color-option" >
-                                                    <li><span class="text-uppercase">Color:</span></li>
+                                                    <li><span class="text-uppercase">Renk:</span></li>
                                                     {% for rs in colors %}
                                                         <input type="radio"  {% if variant.id == rs.id %} checked {% endif %} name="variantid" id="variantid" value="{{ rs.id }}" onchange="this.form.submit();">
                                                         <li  {% if variant.id == rs.id %} class="active" {% endif %}>
@@ -204,7 +204,7 @@
                                             <span class="text-uppercase">QTY: </span>
                                             <input class="input" name="quantity" type="number" value="1" min="1" max="{{ variant.quantity }}">
                                             <button type="submit" {% if variant.quantity < 1  %} disabled {% endif %} class="primary-btn add-to-cart">
-                                                <i class="fa fa-shopping-cart"></i> Add to Cart
+                                                <i class="fa fa-shopping-cart"></i> Sepete Ekle
                                             </button>
                                         </div>
                                     </div>
@@ -214,13 +214,13 @@
                                 <form action="/order/addtoshopcart/{{ product.id }}" method="post"  id="addchart-form">
                                     {% csrf_token %}
                                     <div id="SelectedProduct">
-                                        <p><strong>Availability:</strong> {% if product.amount > 0  %} In Stock {% else %} Out of Stock {% endif %}</p>
+                                        <p><strong>Stok durumu:</strong> {% if product.amount > 0  %} Stokta {% else %} Stokta yok {% endif %}</p>
                                         <h3 class="product-price">{{ product.price|currency:request.session.currency }} {{ request.session.currency }}</h3>
                                         <div class="qty-input">
-                                            <span class="text-uppercase">QTY: </span>
+                                            <span class="text-uppercase">Adet: </span>
                                             <input class="input" name="quantity" type="number" value="1" min="1" max="{{ product.amount }}">
                                             <button type="submit" {% if product.amount < 1  %} disabled {% endif %} class="primary-btn add-to-cart">
-                                                <i class="fa fa-shopping-cart"></i> Add to Cart
+                                                <i class="fa fa-shopping-cart"></i> Sepete Ekle
                                             </button>
                                         </div>
                                     </div>
@@ -241,8 +241,8 @@
             <div class="col-md-12">
                 <div class="product-tab">
                     <ul class="tab-nav">
-                        <li class="active"><a data-toggle="tab" href="#tab1">Details</a></li>
-                        <li><a data-toggle="tab" href="#tab2">Reviews ({{ product.countreview}} )</a></li>
+                        <li class="active"><a data-toggle="tab" href="#tab1">Detaylar</a></li>
+                        <li><a data-toggle="tab" href="#tab2">Görüntüleme ({{ product.countreview}} )</a></li>
                     </ul>
                     <div class="tab-content">
                         <div id="tab1" class="tab-pane fade in active">

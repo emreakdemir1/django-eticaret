@@ -7,6 +7,11 @@ from django.forms import ModelForm
 from product.models import Product, Variants
 
 
+from django.db import models
+from django.utils import timezone
+
+
+
 class ShopCart(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)

@@ -6,7 +6,7 @@
     <div id="top-header">
         <div class="container">
             <div class="pull-left">
-                <span>{% trans "Welcome to E-shop!" %}</span>
+                <span>{% trans "Hoşgeldiniz!" %}</span>
                 {% if messages %}
                     {% for message in messages %}
                         <div class="alert alert-{{message.tags}}" role="alert">
@@ -21,9 +21,7 @@
 
             <div class="pull-right">
                 <ul class="header-top-links">
-                    <li><a href="#">{% trans "Store" %}</a></li>
-                    <li><a href="#">{% trans "Newsletter" %}</a></li>
-                    <li><a href="{% url 'faq' %}">{% trans "FAQ" %}</a></li>
+                   
                     <li class="dropdown default-dropdown">
                         <form action="{% url 'selectlanguage' %}" method="post">{% csrf_token %}
                             <input name="next" type="hidden" value="{{ redirect_to }}">
@@ -110,9 +108,9 @@
                 <div class="header-search">
                     <form action="/search/" method="post">
                         {% csrf_token %}
-                        <input id="query" name="query" class="input search-input" type="text" placeholder="Enter your keyword">
+                        <input id="query" name="query" class="input search-input" type="text" placeholder="Arama yap">
                         <select name="catid"  class="input search-categories">
-                            <option value="0">{% trans "All Categories" %}</option>
+                            <option value="0">{% trans "Kategoriler" %}</option>
 
                         </select>
                         <button class="search-btn"><i class="fa fa-search"></i></button>
@@ -128,20 +126,20 @@
                         {% if user.id is not None %}
                             <div class="dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="true">
                                 <div class="header-btns-icon">
-                                    <img src="{{ request.session.userimage }}" style="height: 40px; border-radius: 30%">
+                                    <i class="fas fa-user"></i>
                                 </div>
                                 <strong class="text-uppercase">{{ user.first_name }} <i class="fa fa-caret-down"></i></strong>
                             </div>
                         {% else %}
-                            <a href="{% url 'login' %}" class="text-uppercase">Login</a> / <a href="{% url 'signup' %}" class="text-uppercase">Sign Up</a>
+                            <a href="{% url 'login' %}" class="text-uppercase">GİRİŞ yap</a> / <a href="{% url 'signup' %}" class="text-uppercase">Kayıt ol</a>
                         {% endif %}
 
                         <ul class="custom-menu">
-                            <li><a href="{% url 'user_index' %}"><i class="fa fa-user-o"></i> {% trans "My Account" %}</a></li>
-                            <li><a href="#"><i class="fa fa-heart-o"></i> {% trans "My Favorits" %}</a></li>
-                            <li><a href="{% url 'user_orders' %}"><i class="fa fa-exchange"></i> {% trans "My Orders " %}</a></li>
-                            <li><a href="{% url 'user_comments' %}"><i class="fa fa-check"></i> {% trans "My Comments" %}</a></li>
-                            <li><a href="{% url 'logout' %}"><i class="fa fa-unlock-alt"></i> {% trans "Logout" %}</a></li>
+                            <li><a href="{% url 'user_index' %}"><i class="fa fa-user-o"></i> {% trans "Hesabım" %}</a></li>
+                           
+                            <li><a href="{% url 'user_orders' %}"><i class="fa fa-exchange"></i> {% trans "Siparişlerim " %}</a></li>
+                            <li><a href="{% url 'user_comments' %}"><i class="fa fa-check"></i> {% trans "Yorumlarım" %}</a></li>
+                            <li><a href="{% url 'logout' %}"><i class="fa fa-unlock-alt"></i> {% trans "Çıkış" %}</a></li>
 
                         </ul>
                     </li>
@@ -157,7 +155,7 @@
 
                                 <span class="qty">{{ count }}</span>
                             </div>
-                            <strong class="text-uppercase">{% trans "My Cart:" %}</strong>
+                            <strong class="text-uppercase">{% trans "Sepetim:" %}</strong>
                             <br>
 
                         </a>

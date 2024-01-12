@@ -12,8 +12,8 @@
     <div id="breadcrumb">
         <div class="container">
             <ul class="breadcrumb">
-                <li><a href="/">Home</a></li>
-                <li class="active">Order Detail</li>
+                <li><a href="/">Anasayfa</a></li>
+                <li class="active">Sipariş Detayları</li>
             </ul>
         </div>
     </div>
@@ -31,58 +31,58 @@
                 <div class="col-md-9">
                     <div class="order-summary clearfix">
                         <div class="section-title">
-                            <h3 class="title">Order Detail</h3>
+                            <h3 class="title">Sipariş Detayı</h3>
                         </div>
                         <table class="shopping-cart-table table">
                             <tr>
-                                <th class="text-left">Name Surname</th>
+                                <th class="text-left">Ad Soyad</th>
                                 <td class="text-left">{{ order.first_name}} {{ order.last_name }} </td>
                             </tr>
                             <tr>
-                                <th class="text-left">Phone</th>
+                                <th class="text-left">Telefon</th>
                                 <td class="text-left">{{ order.phone}}</td>
                             </tr>
                             <tr>
-                                <th class="text-left">Addres</th>
+                                <th class="text-left">Adres</th>
                                 <td class="text-left">{{ order.address}}</td>
                             </tr>
                             <tr>
-                                <th class="text-left">City</th>
+                                <th class="text-left">Şehir</th>
                                 <td class="text-left">{{ order.city}}</td>
                             </tr>
                             <tr>
-                                <th class="text-left">Country</th>
+                                <th class="text-left">Ülke</th>
                                 <td class="text-left">{{ order.country}}</td>
                             </tr>
                             <tr>
-                                <th class="text-left">Status</th>
+                                <th class="text-left">Durum</th>
                                 <td class="text-left">{{ order.status}}</td>
                             </tr>
 
                             <tr>
-                                <th class="text-left">Date</th>
+                                <th class="text-left">Tarih</th>
                                 <td class="text-left">{{ order.create_at}}</td>
                             </tr>
 
-                            <th class="text-left">Shipping Inf</th>
+                            <th class="text-left">Teslimat</th>
                             <td class="text-left">{{ order.adminnote}}</td>
                             </tr>
 
                         </table>
 
                         <div class="section-title">
-                            <h4 class="title">Order Item List</h4>
+                            <h4 class="title">Siparişler</h4>
                         </div>
 
                         <table class="shopping-cart-table table">
                             <tr>
                                 <th class="text-left">Id </th>
-                                <th class="text-left">Product Name </th>
-                                <th class="text-left">Price </th>
-                                <th class="text-left">Qauatity </th>
-                                <th class="text-left">Amount </th>
-                                <th class="text-left">Status </th>
-                                <th class="text-left">Date </th>
+                                <th class="text-left">Ürün ismi </th>
+                                <th class="text-left">Fiyat </th>
+                                <th class="text-left">Adet </th>
+                                <th class="text-left">Tutar </th>
+                                <th class="text-left">Durum </th>
+                                <th class="text-left">Tarih </th>
                             </tr>
                             {% for rs in orderitems %}
                                 <tr>

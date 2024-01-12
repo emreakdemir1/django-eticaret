@@ -4,6 +4,7 @@ from django.contrib import admin
 from home.models import Setting, ContactMessage, FAQ, Language, SettingLang
 
 
+
 class SettingtAdmin(admin.ModelAdmin):
     list_display = ['title','company', 'update_at','status']
 

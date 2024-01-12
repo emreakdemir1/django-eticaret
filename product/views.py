@@ -6,6 +6,8 @@ from django.shortcuts import render
 from product.models import CommentForm, Comment
 
 
+
+
 def index(request):
    return  HttpResponse("My Product Page")
 

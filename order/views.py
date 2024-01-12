@@ -10,6 +10,11 @@ from order.models import ShopCart, ShopCartForm, OrderForm, Order, OrderProduct
 from product.models import Category, Product, Variants
 from user.models import UserProfile
 
+from django.shortcuts import render, redirect
+
+
+
+
 
 def index(request):
     return HttpResponse ("Order Page")
@@ -17,41 +22,41 @@ def index(request):
 @login_required(login_url='/login') # Check login
 def addtoshopcart(request,id):
     url = request.META.get('HTTP_REFERER')  # get last url
-    current_user = request.user  # Access User Session information
+    current_user = request.user  
     product= Product.objects.get(pk=id)
 
     if product.variant != 'None':
-        variantid = request.POST.get('variantid')  # from variant add to cart
-        checkinvariant = ShopCart.objects.filter(variant_id=variantid, user_id=current_user.id)  # Check product in shopcart
+        variantid = request.POST.get('variantid') 
+        checkinvariant = ShopCart.objects.filter(variant_id=variantid, user_id=current_user.id)  
         if checkinvariant:
-            control = 1 # The product is in the cart
+            control = 1
         else:
-            control = 0 # The product is not in the cart"""
+            control = 0 
     else:
-        checkinproduct = ShopCart.objects.filter(product_id=id, user_id=current_user.id) # Check product in shopcart
+        checkinproduct = ShopCart.objects.filter(product_id=id, user_id=current_user.id) 
         if checkinproduct:
-            control = 1 # The product is in the cart
+            control = 1 
         else:
-            control = 0 # The product is not in the cart"""
+            control = 0 
 
-    if request.method == 'POST':  # if there is a post
+    if request.method == 'POST':  
         form = ShopCartForm(request.POST)
         if form.is_valid():
-            if control==1: # Update  shopcart
+            if control==1: 
                 if product.variant == 'None':
                     data = ShopCart.objects.get(product_id=id, user_id=current_user.id)
                 else:
                     data = ShopCart.objects.get(product_id=id, variant_id=variantid, user_id=current_user.id)
                 data.quantity += form.cleaned_data['quantity']
-                data.save()  # save data
-            else : # Inser to Shopcart
+                data.save()  
+            else : 
                 data = ShopCart()
                 data.user_id = current_user.id
                 data.product_id =id
                 data.variant_id = variantid
                 data.quantity = form.cleaned_data['quantity']
                 data.save()
-        messages.success(request, "Product added to Shopcart ")
+        messages.success(request, "Ürün Sepete Eklendi. ")
         return HttpResponseRedirect(url)
 
     else: # if there is no post
@@ -66,7 +71,7 @@ def addtoshopcart(request,id):
             data.quantity = 1
             data.variant_id =None
             data.save()  #
-        messages.success(request, "Product added to Shopcart")
+        messages.success(request, "Ürün Sepete Eklendi.")
         return HttpResponseRedirect(url)
 
 
@@ -87,7 +92,7 @@ def shopcart(request):
 @login_required(login_url='/login') # Check login
 def deletefromcart(request,id):
     ShopCart.objects.filter(id=id).delete()
-    messages.success(request, "Your item deleted form Shopcart.")
+    messages.success(request, "Ürününüz sepetten kaldırıldı.")
     return HttpResponseRedirect("/shopcart")
 
 
@@ -106,7 +111,7 @@ def orderproduct(request):
         form = OrderForm(request.POST)
         #return HttpResponse(request.POST.items())
         if form.is_valid():
-            # Send Credit card to bank,  If the bank responds ok, continue, if not, show the error
+            #
             # ..............
 
             data = Order()
@@ -149,7 +154,7 @@ def orderproduct(request):
 
             ShopCart.objects.filter(user_id=current_user.id).delete() # Clear & Delete shopcart
             request.session['cart_items']=0
-            messages.success(request, "Your Order has been completed. Thank you ")
+            messages.success(request, "Siparişiniz alınmıştır. ")
             return render(request, 'Order_Completed.html',{'ordercode':ordercode,'category': category})
         else:
             messages.warning(request, form.errors)
